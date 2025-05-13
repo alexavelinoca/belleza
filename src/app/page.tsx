@@ -1,11 +1,18 @@
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import Centers from "@/components/Centers";
 
 export default function Home() {
   return (
-    <div className='grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]'>
-      <h1 className='text-4xl font-bold'>Hello World</h1>
-      <Button variant='outline'>Click me</Button>
-    </div>
+    <>
+      <div className='pt-30 bg-red-200 h-[40vh] mb-12'>
+        <div className='flex flex-col w-full pl-20 mb-20'>
+          <h1 className='text-6xl font-bold font-playfair self-start max-w-3xl'>
+            Your beauty appointment, just a click away
+          </h1>
+        </div>
+      </div>
+      <div className='flex flex-col w-full pl-20'>
+        <Centers />
+      </div>
+    </>
   );
 }

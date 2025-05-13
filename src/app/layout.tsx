@@ -1,15 +1,34 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {
+  Geist,
+  Geist_Mono,
+  Montserrat,
+  Playfair_Display,
+} from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
+import Image from "next/image";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-montserrat",
+});
+
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  variable: "--font-playfair",
 });
 
 export const metadata: Metadata = {
@@ -23,10 +42,33 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html
+      lang='en'
+      className={`${montserrat.className} ${playfair.variable} antialiased`}
+    >
+      <body>
+        <nav className='flex justify-between items-center p-4 sticky top-0 z-50 shadow-md bg-white'>
+          <Link href='/'>
+            <Image
+              className='ml-16'
+              src='/images/belleza-logo.png'
+              alt='Belleza'
+              width={100}
+              height={100}
+            />
+          </Link>
+          <div className='flex items-center gap-12 pr-5'>
+            <Link href='/' className='font-bold font-montserrat'>
+              Login
+            </Link>
+            <Link href='/' className='font-bold font-montserrat'>
+              Register
+            </Link>
+            <Link href='/' className='font-bold font-montserrat'>
+              Contact
+            </Link>
+          </div>
+        </nav>
         {children}
       </body>
     </html>
