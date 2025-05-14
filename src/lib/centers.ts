@@ -19,7 +19,7 @@ export type ServiceProps = {
 export const centers: CenterProps[] = [
   {
     id: 1,
-    company: "beard_barber",
+    company: "Beard_Barber",
     name: "Beard & Barber",
     image: "/images/center.png",
     rating: 4.2,

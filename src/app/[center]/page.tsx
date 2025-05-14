@@ -1,15 +1,19 @@
 "use client";
 
 import Services from "@/components/Services";
+import SummaryCard from "@/components/SummaryCard";
+import { Button } from "@/components/ui/button";
 import { CenterProps, centers } from "@/lib/centers";
-import { StarIcon } from "lucide-react";
+import { ClockIcon, MapPinIcon, StarIcon } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { Router } from "next/router";
 
 export default function CenterPage() {
   const { center } = useParams();
+  const router = useRouter();
   const centerContent = centers.find((center2) => center2.company === center);
-  console.log(centerContent);
 
   return (
     <div className=' flex flex-col gap-4 max-w-screen-xl mx-auto p-6 lg:p-10'>
@@ -48,13 +52,20 @@ export default function CenterPage() {
           />
         </div>
       </div>
-      <Services
-        services={centerContent?.services || []}
-        centerName={centerContent?.name || ""}
-        rating={centerContent?.rating || 0}
-        reviews={centerContent?.reviews || 0}
-        company={centerContent?.company || ""}
-      />
+      <div className='flex flex-row gap-4'>
+        <Services
+          services={centerContent?.services || []}
+          centerName={centerContent?.name || ""}
+          rating={centerContent?.rating || 0}
+          reviews={centerContent?.reviews || 0}
+          company={centerContent?.company || ""}
+          booking={false}
+        />
+        <SummaryCard
+          centerContent={centerContent as CenterProps}
+          router={router as unknown as Router}
+        />
+      </div>
     </div>
   );
 }

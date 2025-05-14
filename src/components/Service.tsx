@@ -1,13 +1,16 @@
 import { ServiceProps } from "@/lib/centers";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
+import { PlusIcon } from "lucide-react";
 
 export function Service({
   service,
   company,
+  booking,
 }: {
   service: ServiceProps;
   company: string;
+  booking: boolean;
 }) {
   const router = useRouter();
 
@@ -24,10 +27,10 @@ export function Service({
       </div>
       <Button
         variant='outline'
-        className='px-4 py-2 rounded-md self-center'
-        onClick={() => router.push(`/${company}/booking`)}
+        className={`px-4 py-2 ${!booking && "rounded-2xl"} self-center`}
+        onClick={() => !booking && router.push(`/${company}/booking`)}
       >
-        Book Now
+        {booking ? <PlusIcon className='w-4 h-4' /> : "Book"}
       </Button>
     </div>
   );
