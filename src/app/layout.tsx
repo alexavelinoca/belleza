@@ -47,26 +47,27 @@ export default function RootLayout({
       className={`${montserrat.className} ${playfair.variable} antialiased`}
     >
       <body>
-        <nav className='flex justify-between items-center p-4 sticky top-0 z-50 shadow-md bg-white'>
-          <Link href='/'>
-            <Image
-              className='ml-16'
-              src='/images/belleza-logo.png'
-              alt='Belleza'
-              width={100}
-              height={100}
-            />
-          </Link>
-          <div className='flex items-center gap-12 pr-5'>
-            <Link href='/' className='font-bold font-montserrat'>
-              Login
+        <nav className='sticky top-0 z-50 bg-white shadow-md'>
+          <div className='mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center'>
+            <Link href='/'>
+              <Image
+                src='/images/belleza-logo.png'
+                alt='Belleza'
+                width={100}
+                height={100}
+              />
             </Link>
-            <Link href='/' className='font-bold font-montserrat'>
-              Register
-            </Link>
-            <Link href='/' className='font-bold font-montserrat'>
-              Contact
-            </Link>
+            <div className='flex items-center gap-8'>
+              <Link href='/' className='font-bold font-montserrat'>
+                Login
+              </Link>
+              <Link href='/' className='font-bold font-montserrat'>
+                Register
+              </Link>
+              <Link href='/' className='font-bold font-montserrat'>
+                Contact
+              </Link>
+            </div>
           </div>
         </nav>
         {children}
