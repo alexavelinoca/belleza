@@ -9,11 +9,14 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { z } from "zod";
-import { StarIcon } from "lucide-react";
+import { StarIcon, CalendarIcon, ClockIcon } from "lucide-react";
 import { ServiceProps } from "@/lib/services";
 import useUserSelectionsStore from "@/store/userSelectionsStore";
 import { Button } from "@/components/ui/button";
 import Calendar from "@/components/Calendar";
+import { Times } from "@/components/Times";
+import { TimesData } from "@/app/api/bookDateTimes";
+import { bookDateTimes } from "@/app/api/bookDateTimes";
 const schema = z.object({
   firstname: z.string().min(1, "First name is required"),
   lastname: z.string().min(1, "Last name is required"),
@@ -34,15 +37,49 @@ export default function Appointment() {
   const [currentCenter, setCurrentCenter] = useState<CenterProps | undefined>();
   const { center } = useParams();
   const services = useUserSelectionsStore((state: any) => state.services);
+  const duration = services.reduce((acc: number, service: ServiceProps) => {
+    return acc + service.time;
+  }, 0);
+  const date = useUserSelectionsStore((state: any) => state.date);
+  const time = useUserSelectionsStore((state: any) => state.time);
 
   useEffect(() => {
     const centerData = centers.find((c) => c.company === center);
     setCurrentCenter(centerData);
   }, [center]);
 
-  const onSubmit = (data: AppointmentForm) => {
-    console.log(data);
+  const addTime = (time: string, duration: number) => {
+    const [hours, minutes] = time.split(":").map(Number);
+
+    const start = new Date();
+    start.setHours(hours, minutes, 0, 0);
+
+    const end = new Date(start);
+    end.setMinutes(start.getMinutes() + duration);
+
+    const format = (d: Date) =>
+      d.toLocaleTimeString("en-GB", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      });
+
+    return `${format(start)} - ${format(end)}`;
   };
+
+  const parseDuration = (duration: number) => {
+    const hours = Math.floor(duration / 60);
+    const minutes = duration % 60;
+    return `${hours} h ${minutes} m duration`;
+  };
+
+  const onSubmit = (data: AppointmentForm) => {
+    const stored = localStorage.getItem("times");
+    const current: TimesData = stored ? JSON.parse(stored) : {};
+    const updated = bookDateTimes(date, time, current, duration);
+    localStorage.setItem("times", JSON.stringify(updated));
+  };
+
   return (
     <div className='flex flex-col gap-4 max-w-screen-xl mx-auto p-6 lg:p-10'>
       <h1 className='text-3xl font-bold font-montserrat mb-6'>Select time</h1>
@@ -93,15 +130,9 @@ export default function Appointment() {
           </div>
 
           <Calendar />
-
-          <button
-            type='submit'
-            className='bg-black text-white px-6 py-2 rounded font-semibold'
-          >
-            Confirm
-          </button>
+          <Times date={date} />
         </form>
-        <div className='border border-gray-200 rounded-md p-4 w-[550px] flex flex-col justify-between max-h-[600px] p-6'>
+        <div className='sticky top-20 border border-gray-200 rounded-md p-4 w-[550px] flex flex-col justify-between max-h-[600px] p-6'>
           <div className='flex flex-col'>
             <div className='flex flex-row gap-4'>
               <div className='relative h-[100px] w-[100px]'>
@@ -131,6 +162,20 @@ export default function Appointment() {
               </div>
             </div>
             <div className='flex flex-col gap-4 mt-4 font-montserrat'>
+              <div className='flex flex-col gap-2 py-4'>
+                {date && (
+                  <p className='flex flex-row gap-2 text-sm font-medium text-gray-500 font-montserrat'>
+                    <CalendarIcon className='w-5 h-5' />
+                    {date}
+                  </p>
+                )}
+                {time && (
+                  <p className='flex flex-row gap-2 text-sm font-medium text-gray-500 font-montserrat'>
+                    <ClockIcon className='w-5 h-5' />
+                    {addTime(time, duration)} ({parseDuration(duration)})
+                  </p>
+                )}
+              </div>
               {services.length > 0 ? (
                 services.map((service: ServiceProps) => (
                   <div key={service.id} className='flex flex-col'>
@@ -165,7 +210,13 @@ export default function Appointment() {
             </div>
           </div>
           <div className='flex gap-2'>
-            <Button className='w-full mt-4 self-end'>Continue</Button>
+            <Button
+              className='w-full mt-4 self-end cursor-pointer'
+              type='submit'
+              onClick={handleSubmit(onSubmit)}
+            >
+              Continue
+            </Button>
           </div>
         </div>
       </div>

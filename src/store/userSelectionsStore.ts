@@ -5,6 +5,11 @@ type UserSelectionsState = {
   services: ServiceProps[];
   getServices: () => ServiceProps[];
   addService: (service: ServiceProps) => void;
+  date: string;
+  setDate: (date: string) => void;
+  time: string;
+  setTime: (time: string) => void;
+  resetTime: () => void;
 };
 
 const useUserSelectionsStore = create<UserSelectionsState>((set, get) => ({
@@ -27,6 +32,20 @@ const useUserSelectionsStore = create<UserSelectionsState>((set, get) => ({
   },
   resetServices: () => {
     set({ services: [] });
+  },
+  date: "",
+  setDate: (date: string) => {
+    set({ date });
+  },
+  resetDate: () => {
+    set({ date: "" });
+  },
+  time: "",
+  setTime: (time: string) => {
+    set({ time });
+  },
+  resetTime: () => {
+    set({ time: "" });
   },
 }));
 
