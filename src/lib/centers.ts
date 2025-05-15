@@ -2,134 +2,88 @@ export type CenterProps = {
   id: number;
   company: string;
   name: string;
-  image: string;
+  images: string[];
   rating: number;
   reviews: number;
   category: string;
-  services: ServiceProps[];
-};
-
-export type ServiceProps = {
-  id: number;
-  name: string;
-  price: number;
-  time: number;
+  address: string;
 };
 
 export const centers: CenterProps[] = [
   {
-    id: 1,
-    company: "Beard_Barber",
-    name: "Beard & Barber",
-    image: "/images/center.png",
-    rating: 4.2,
-    reviews: 100,
-    category: "Barber",
-    services: [
-      {
-        id: 1,
-        name: "Service 1",
-        price: 100,
-        time: 30,
-      },
-      {
-        id: 2,
-        name: "Service 2",
-        price: 100,
-        time: 30,
-      },
-      {
-        id: 3,
-        name: "Service 3",
-        price: 100,
-        time: 30,
-      },
-      {
-        id: 4,
-        name: "Service 4",
-        price: 100,
-        time: 30,
-      },
-      {
-        id: 5,
-        name: "Service 5",
-        price: 100,
-        time: 30,
-      },
+    id: 5,
+    company: "bloom_skin",
+    name: "Bloom Skin & Beauty",
+    rating: 4.9,
+    reviews: 91,
+    category: "Skin",
+    address: "654 Avenida El Polo, Surco, Lima",
+    images: [
+      "/images/center5_1.png",
+      "/images/center5_2.png",
+      "/images/center5_3.png",
+      "/images/center5_4.png",
     ],
   },
   {
     id: 2,
-    company: "Hair_Barber",
-    name: "Hair & Barber",
-    image: "/images/center2.png",
-    rating: 4.7,
-    reviews: 43,
-    category: "Hair",
-    services: [
-      {
-        id: 1,
-        name: "Service 1",
-        price: 100,
-        time: 30,
-      },
+    company: "glow_nails",
+    name: "Glow Nails Studio",
+    rating: 4.9,
+    reviews: 88,
+    category: "Nails",
+    address: "456 Avenida Primavera, San Borja, Lima",
+    images: [
+      "/images/center2_1.png",
+      "/images/center2_2.png",
+      "/images/center2_3.png",
+      "/images/center2_4.png",
     ],
   },
   {
     id: 3,
-    company: "Nails_Barber",
-    name: "Nails & Barber",
-    image: "/images/center3.png",
-    rating: 4.9,
-    reviews: 100,
-    category: "Nails",
-    services: [
-      {
-        id: 1,
-        name: "Service 1",
-        price: 100,
-        time: 30,
-      },
+    company: "zen_massage",
+    name: "Zen Massage & Spa",
+    rating: 4.8,
+    reviews: 102,
+    category: "Massage",
+    address: "789 Calle Los Sauces, Miraflores, Lima",
+    images: [
+      "/images/center3_1.png",
+      "/images/center3_2.png",
+      "/images/center3_3.png",
+      "/images/center3_4.png",
+      "/images/center3_5.png",
     ],
   },
   {
     id: 4,
-    company: "Massage_Hair",
-    name: "Massage & Hair",
-    image: "/images/center4.png",
-    rating: 4.9,
-    reviews: 100,
-    category: "Massage",
-    services: [
-      {
-        id: 1,
-        name: "Service 1",
-        price: 100,
-        time: 30,
-      },
+    company: "urban_cut",
+    name: "Urban Cut Studio",
+    rating: 4.7,
+    reviews: 67,
+    category: "Barber",
+    address: "321 Jirón de la Unión, Centro de Lima",
+    images: [
+      "/images/center4_1.png",
+      "/images/center4_2.png",
+      "/images/center4_3.png",
     ],
   },
   {
-    id: 5,
-    company: "Massage_Barber",
-    name: "Massage & Barber",
-    image: "/images/center5.png",
-    rating: 4.8,
-    reviews: 133,
-    category: "Massage",
-    services: [
-      {
-        id: 1,
-        name: "Service 1",
-        price: 100,
-        time: 30,
-      },
-      {
-        id: 2,
-        name: "Service 2",
-        price: 100,
-        time: 30,
-      },
+    id: 1,
+    company: "beard_barber",
+    name: "Beard & Barber",
+    rating: 4.6,
+    reviews: 120,
+    category: "Barber",
+    address: "123 Main Street, Downtown, Lima",
+    images: [
+      "/images/center1_1.png",
+      "/images/center1_2.png",
+      "/images/center1_3.png",
+      "/images/center1_4.png",
+      "/images/center1_5.png",
     ],
   },
 ];

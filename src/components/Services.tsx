@@ -1,25 +1,24 @@
-import { ServiceProps } from "@/lib/centers";
+"use client";
+import { ServiceProps } from "@/lib/services";
+import { useEffect } from "react";
 import { Service } from "./Service";
-import { Button } from "./ui/button";
-import { ClockIcon, MapPinIcon, StarIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { fetchCenterServices } from "@/app/api/fetchCenterServices";
 
 export default function Services({
-  services,
-  centerName,
-  rating,
-  reviews,
   company,
   booking,
+  centerId,
 }: {
-  services: ServiceProps[];
-  centerName: string;
-  rating: number;
-  reviews: number;
   company: string;
   booking: boolean;
+  centerId: number;
 }) {
-  const router = useRouter();
+  console.log("centerId", centerId);
+  const [services, setServices] = useState<ServiceProps[]>([]);
+  useEffect(() => {
+    fetchCenterServices(centerId).then(setServices);
+  }, [centerId]);
 
   return (
     <div className='flex flex-col gap-4 mt-4 w-full'>

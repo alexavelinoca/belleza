@@ -2,18 +2,29 @@
 
 import Services from "@/components/Services";
 import SummaryCard from "@/components/SummaryCard";
-import { Button } from "@/components/ui/button";
 import { CenterProps, centers } from "@/lib/centers";
-import { ClockIcon, MapPinIcon, StarIcon } from "lucide-react";
+import { services } from "@/lib/services";
+import { StarIcon } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { Router } from "next/router";
+import { useEffect, useState } from "react";
+import { fetchCenters } from "../api/fetchCenters";
 
 export default function CenterPage() {
   const { center } = useParams();
   const router = useRouter();
-  const centerContent = centers.find((center2) => center2.company === center);
+  const [centerContent, setCenterContent] = useState<CenterProps | undefined>();
+
+  useEffect(() => {
+    fetchCenters().then((data) => {
+      console.log("data", data);
+      setCenterContent(
+        data.find((centerName) => centerName.company === center)
+      );
+    });
+  }, [center]);
 
   return (
     <div className=' flex flex-col gap-4 max-w-screen-xl mx-auto p-6 lg:p-10'>
@@ -28,38 +39,35 @@ export default function CenterPage() {
       <div className='flex flex-col md:flex-row gap-4 '>
         <div>
           <Image
-            src={centerContent?.image || ""}
+            src={centerContent?.images[0] || ""}
             alt={centerContent?.name || ""}
             width={1030}
             height={800}
-            className='rounded-md'
+            className='rounded-md aspect-[4/3] object-cover max-h-[515px]'
           />
         </div>
         <div className='flex flex-col gap-4'>
           <Image
-            src={centerContent?.image || ""}
+            src={centerContent?.images[1] || ""}
             alt={centerContent?.name || ""}
             width={500}
             height={200}
-            className='rounded-md'
+            className='rounded-md aspect-[4/3] object-cover max-h-[250px]'
           />
           <Image
-            src={centerContent?.image || ""}
+            src={centerContent?.images[2] || ""}
             alt={centerContent?.name || ""}
             width={500}
             height={200}
-            className='rounded-md'
+            className='rounded-md aspect-[4/3] object-cover max-h-[250px]'
           />
         </div>
       </div>
       <div className='flex flex-row gap-4'>
         <Services
-          services={centerContent?.services || []}
-          centerName={centerContent?.name || ""}
-          rating={centerContent?.rating || 0}
-          reviews={centerContent?.reviews || 0}
           company={centerContent?.company || ""}
           booking={false}
+          centerId={centerContent?.id || 0}
         />
         <SummaryCard
           centerContent={centerContent as CenterProps}

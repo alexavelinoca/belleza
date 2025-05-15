@@ -4,12 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Center(center: CenterProps) {
-  const { name, image, rating, reviews, category } = center;
+  const { name, images, rating, reviews, category } = center;
   return (
     <div className='w-full sm:w-[48%] md:w-[31%] lg:w-[23%] min-w-[200px] bg-white rounded-md shadow-lg cursor-pointer transition-all'>
       <Link href={`/${center.company}`}>
         <Image
-          src={image}
+          src={images[0]}
           className='w-full aspect-[4/3] object-cover rounded-t-md'
           alt='center'
           width={270}

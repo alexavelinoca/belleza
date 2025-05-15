@@ -1,7 +1,8 @@
-import { ServiceProps } from "@/lib/centers";
+import { ServiceProps } from "@/lib/services";
 import { Button } from "./ui/button";
+import { PlusIcon, CheckIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { PlusIcon } from "lucide-react";
+import useUserSelectionsStore from "@/store/userSelectionsStore";
 
 export function Service({
   service,
@@ -13,6 +14,17 @@ export function Service({
   booking: boolean;
 }) {
   const router = useRouter();
+  const addService = useUserSelectionsStore((state: any) => state.addService);
+  const services = useUserSelectionsStore((state: any) => state.services);
+  const selected = services.some((s: ServiceProps) => s.id === service.id);
+
+  const handleBooking = () => {
+    addService(service);
+  };
+
+  const goToBooking = () => {
+    router.push(`/${company}/booking`);
+  };
 
   return (
     <div className='flex flex-row gap-2 min-h-[100px] border border-gray-200 rounded-md p-4'>
@@ -27,10 +39,20 @@ export function Service({
       </div>
       <Button
         variant='outline'
-        className={`px-4 py-2 ${!booking && "rounded-2xl"} self-center`}
-        onClick={() => !booking && router.push(`/${company}/booking`)}
+        className={`px-4 py-2 ${!booking && "rounded-2xl"} self-center ${
+          selected ? "bg-[#6950f3]" : ""
+        }`}
+        onClick={booking ? handleBooking : goToBooking}
       >
-        {booking ? <PlusIcon className='w-4 h-4' /> : "Book"}
+        {booking ? (
+          selected ? (
+            <CheckIcon className='w-4 h-4 text-white' />
+          ) : (
+            <PlusIcon className='w-4 h-4' />
+          )
+        ) : (
+          "Book"
+        )}
       </Button>
     </div>
   );
