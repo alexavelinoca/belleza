@@ -21,8 +21,12 @@ export default function Services({
   }, [centerId]);
 
   return (
-    <div className='flex flex-col gap-4 mt-4 w-full'>
-      <h1 className='text-2xl font-bold font-montserrat'>Services</h1>
+    <div className={`flex flex-col gap-4 w-full`}>
+      {booking ? (
+        <h1 className='text-3xl font-bold font-montserrat'>Select services</h1>
+      ) : (
+        <h1 className='text-2xl font-bold font-montserrat'>Services</h1>
+      )}
       <div className='flex flex-row gap-4'>
         <div className='flex flex-col gap-4 w-full mr-4'>
           {services.map((service) => (

@@ -8,6 +8,7 @@ import useUserSelectionsStore from "@/store/userSelectionsStore";
 import { ServiceProps } from "@/lib/services";
 import { CenterProps } from "@/lib/centers";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 export default function BookingPage() {
   const [currentCenter, setCurrentCenter] = useState<CenterProps | undefined>();
@@ -19,6 +20,7 @@ export default function BookingPage() {
   }, [center]);
 
   const services = useUserSelectionsStore((state: any) => state.services);
+  const router = useRouter();
   return (
     <div className='flex flex-row gap-4 max-w-screen-xl mx-auto p-6 lg:p-10'>
       <div className='mr-4 w-full'>
@@ -92,7 +94,12 @@ export default function BookingPage() {
           </div>
         </div>
         <div className='flex gap-2'>
-          <Button className='w-full mt-4 self-end'>Continue</Button>
+          <Button
+            className='w-full mt-4 self-end'
+            onClick={() => router.push(`/${center}/booking/time`)}
+          >
+            Continue
+          </Button>
         </div>
       </div>
     </div>

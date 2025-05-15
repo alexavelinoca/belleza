@@ -36,7 +36,7 @@ export default function CenterPage() {
           ( {centerContent?.reviews || 0} )
         </span>
       </p>
-      <div className='flex flex-col md:flex-row gap-4 '>
+      <div className='flex flex-col md:flex-row gap-4 mb-4'>
         <div>
           <Image
             src={centerContent?.images[0] || "/images/default-image.png"}

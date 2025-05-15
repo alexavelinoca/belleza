@@ -1,6 +1,6 @@
 "use client";
 import { ArrowLeftIcon, XIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import useUserSelectionsStore from "@/store/userSelectionsStore";
 export default function BookingLayout({
   children,
@@ -15,6 +15,10 @@ export default function BookingLayout({
     resetServices();
     return router.back();
   };
+
+  const pathname = usePathname();
+  const title = pathname.includes("time") ? "Select time" : "Select services";
+
   return (
     <>
       <nav className='fixed top-0 left-0 w-full z-50 bg-white shadow-md'>
@@ -23,9 +27,7 @@ export default function BookingLayout({
             className='w-6 h-6 cursor-pointer hover:text-gray-500 mr-12'
             onClick={handleBack}
           />
-          <h1 className='text-xl font-medium font-montserrat'>
-            Select services
-          </h1>
+          <h1 className='text-xl font-medium font-montserrat'>{title}</h1>
           <XIcon
             className='w-6 h-6 cursor-pointer hover:text-gray-500 ml-auto'
             onClick={handleBack}
