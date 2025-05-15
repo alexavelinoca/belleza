@@ -24,10 +24,15 @@ export function Service({
 
   const goToBooking = () => {
     router.push(`/${company}/booking`);
+    addService(service);
   };
 
   return (
-    <div className='flex flex-row gap-2 min-h-[100px] border border-gray-200 rounded-md p-4'>
+    <div
+      className={`flex flex-row gap-2 min-h-[100px] border ${
+        selected ? "border-[#6950f3]" : "border-gray-300"
+      }  rounded-md p-4`}
+    >
       <div className='flex flex-col justify-between w-full pl-1'>
         <h2 className='text-lg font-bold font-montserrat'>{service.name}</h2>
         <p className='text-sm text-gray-500 font-montserrat'>
@@ -40,7 +45,7 @@ export function Service({
       <Button
         variant='outline'
         className={`px-4 py-2 ${!booking && "rounded-2xl"} self-center ${
-          selected ? "bg-[#6950f3]" : ""
+          booking && selected ? "bg-[#6950f3]" : ""
         }`}
         onClick={booking ? handleBooking : goToBooking}
       >

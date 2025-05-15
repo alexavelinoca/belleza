@@ -25,6 +25,9 @@ const useUserSelectionsStore = create<UserSelectionsState>((set, get) => ({
       }));
     }
   },
+  resetServices: () => {
+    set({ services: [] });
+  },
 }));
 
 export default useUserSelectionsStore;

@@ -33,13 +33,13 @@ export default function CenterPage() {
         {centerContent?.rating}
         <StarIcon size={20} className='text-black' fill='currentColor' />
         <span className='text-lg text-purple-500'>
-          ( {centerContent?.reviews} )
+          ( {centerContent?.reviews || 0} )
         </span>
       </p>
       <div className='flex flex-col md:flex-row gap-4 '>
         <div>
           <Image
-            src={centerContent?.images[0] || ""}
+            src={centerContent?.images[0] || "/images/default-image.png"}
             alt={centerContent?.name || ""}
             width={1030}
             height={800}
@@ -48,14 +48,14 @@ export default function CenterPage() {
         </div>
         <div className='flex flex-col gap-4'>
           <Image
-            src={centerContent?.images[1] || ""}
+            src={centerContent?.images[1] || "/images/default-image.png"}
             alt={centerContent?.name || ""}
             width={500}
             height={200}
             className='rounded-md aspect-[4/3] object-cover max-h-[250px]'
           />
           <Image
-            src={centerContent?.images[2] || ""}
+            src={centerContent?.images[2] || "/images/default-image.png"}
             alt={centerContent?.name || ""}
             width={500}
             height={200}

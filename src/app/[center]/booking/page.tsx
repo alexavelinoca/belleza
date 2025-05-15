@@ -6,35 +6,54 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import useUserSelectionsStore from "@/store/userSelectionsStore";
 import { ServiceProps } from "@/lib/services";
+import { CenterProps } from "@/lib/centers";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 export default function BookingPage() {
-  const center = centers[0];
-  const { name, rating, reviews, company, images } = center;
+  const [currentCenter, setCurrentCenter] = useState<CenterProps | undefined>();
+  const { center } = useParams();
+
+  useEffect(() => {
+    const centerData = centers.find((c) => c.company === center);
+    setCurrentCenter(centerData);
+  }, [center]);
+
   const services = useUserSelectionsStore((state: any) => state.services);
   return (
     <div className='flex flex-row gap-4 max-w-screen-xl mx-auto p-6 lg:p-10'>
       <div className='mr-4 w-full'>
-        <Services centerId={center.id} company={company} booking={true} />
+        <Services
+          centerId={currentCenter?.id || 0}
+          company={currentCenter?.company || ""}
+          booking={true}
+        />
       </div>
       <div className='border border-gray-200 rounded-md p-4 w-[600px] flex flex-col justify-between max-h-[600px] p-6'>
         <div className='flex flex-col'>
           <div className='flex flex-row gap-4'>
             <div className='relative h-[100px] w-[100px]'>
               <Image
-                src={images[0]}
-                alt={name}
+                src={currentCenter?.images[0] || "/images/default-image.png"}
+                alt={currentCenter?.name || ""}
                 fill
                 className='object-cover rounded-md'
               />
             </div>
             <div className='flex flex-col gap-2'>
-              <p className='text-lg font-bold font-montserrat'>{name}</p>
+              <p className='text-lg font-bold font-montserrat'>
+                {currentCenter?.name}
+              </p>
               <div className='flex flex-row gap-2'>
-                <p className='text-sm font-montserrat'>{rating}</p>
+                <p className='text-sm font-montserrat'>
+                  {currentCenter?.rating}
+                </p>
                 <StarIcon className='w-4 h-4' fill='black' />
-                <p className='text-sm font-montserrat'>({reviews})</p>
+                <p className='text-sm font-montserrat'>
+                  ({currentCenter?.reviews})
+                </p>
               </div>
               <p className='text-sm font-montserrat'>
-                13555 Biscayne Blvd, North Miami Beach
+                {currentCenter?.address}
               </p>
             </div>
           </div>
