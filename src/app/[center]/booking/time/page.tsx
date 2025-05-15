@@ -41,8 +41,7 @@ export default function Appointment() {
   }, [center]);
 
   const onSubmit = (data: AppointmentForm) => {
-    console.log("Agendado ✅", data);
-    // Aquí puedes llamar a reserveSlot() y guardar en localStorage o Zustand
+    console.log(data);
   };
   return (
     <div className='flex flex-col gap-4 max-w-screen-xl mx-auto p-6 lg:p-10'>

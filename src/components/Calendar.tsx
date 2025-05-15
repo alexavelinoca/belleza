@@ -2,7 +2,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useState } from "react";
 
-// Hardcoded 14 días como ejemplo
 const days = [
   { month: "May", date: "15", label: "Wed" },
   { month: "May", date: "16", label: "Thu" },
