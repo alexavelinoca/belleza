@@ -1,17 +1,21 @@
 "use client";
-import { days } from "@/lib/days";
+
 import useUserSelectionsStore from "@/store/userSelectionsStore";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useMemo, useRef, useState, useEffect } from "react";
 import { VISIBLE_DAYS, SMALL_SCREEN_VISIBLE_DAYS } from "@/lib/constants";
+import { useIsSmallScreen } from "@/hooks/useIsSmallScreen";
+import { days } from "@/lib/days";
 
 export default function Calendar() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [startIndex, setStartIndex] = useState(0);
-  const [currentMonth, setCurrentMonth] = useState(days[0].month);
-  const [currentYear, setCurrentYear] = useState(days[0].year);
   const containerRef = useRef<HTMLDivElement>(null);
-  const { setDate } = useUserSelectionsStore();
+  const { setDate, resetTime, setTime } = useUserSelectionsStore();
+
+  useEffect(() => {
+    handleClick(0);
+  }, []);
 
   const normalize = (date: Date) => {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -23,48 +27,51 @@ export default function Calendar() {
     return dayDate >= currentDate;
   });
 
-  const isSmallScreen = window.innerWidth < 768;
+  const isSmallScreen = useIsSmallScreen();
 
-  const visibleDays = futureDays.slice(
-    startIndex,
-    startIndex + (isSmallScreen ? SMALL_SCREEN_VISIBLE_DAYS : VISIBLE_DAYS)
-  );
+  const visibleDays = useMemo(() => {
+    const count = isSmallScreen ? SMALL_SCREEN_VISIBLE_DAYS : VISIBLE_DAYS;
+    return futureDays.slice(startIndex, startIndex + count);
+  }, [futureDays, startIndex, isSmallScreen]);
+
+  const itemRefs = useRef<Record<number, HTMLDivElement | null>>({});
 
   const handleClick = (index: number) => {
+    resetTime();
+    setTime("");
     setSelectedIndex(index);
-    setCurrentMonth(days[index].month);
-    setCurrentYear(days[index].year);
-    setDate(
-      `${days[index].year}-${days[index].month}-${Number(days[index].date) + 1}`
-    );
-    const container = containerRef.current;
-    const child = container?.children[index] as HTMLElement;
-    if (container && child) {
-      container.scrollTo({
-        left: child.offsetLeft,
+    const selected = futureDays[index];
+    const formattedDate = `${String(selected.year).padStart(4, "0")}-${String(
+      selected.month
+    ).padStart(2, "0")}-${String(selected.date).padStart(2, "0")}`;
+    setDate(formattedDate);
+
+    const element = itemRefs.current[index];
+    if (element) {
+      element.scrollIntoView({
         behavior: "smooth",
+        inline: "center",
+        block: "nearest",
       });
     }
   };
-
-  useEffect(() => {
-    handleClick(selectedIndex);
-  }, [selectedIndex]);
 
   const handleLeft = () => {
     if (startIndex > 0) setStartIndex(startIndex - 7);
   };
 
   const handleRight = () => {
-    console.log("startIndex", startIndex);
-    if (startIndex + VISIBLE_DAYS < days.length) setStartIndex(startIndex + 7);
+    if (startIndex + VISIBLE_DAYS < futureDays.length)
+      setStartIndex(startIndex + 7);
   };
+
+  const selectedDay = futureDays[selectedIndex];
 
   return (
     <div className='flex flex-col gap-4'>
       <div className='flex flex-row gap-4 w-full justify-between'>
         <h4 className='text-lg font-semibold'>
-          {currentMonth} {currentYear}
+          {selectedDay.month} {selectedDay.year}
         </h4>
         <div className='flex flex-row gap-4'>
           <ChevronLeft
@@ -87,6 +94,9 @@ export default function Calendar() {
           return (
             <div
               key={realIndex}
+              ref={(el) => {
+                itemRefs.current[realIndex] = el;
+              }}
               className='flex flex-col items-center min-w-[56px] cursor-pointer'
               onClick={() => handleClick(realIndex)}
             >

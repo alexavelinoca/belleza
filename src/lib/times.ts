@@ -1,7 +1,7 @@
 export const times = {
   "2025-May-14": [
-    { time: "09:00", available: false },
-    { time: "09:20", available: false },
+    { time: "09:00", available: true },
+    { time: "09:20", available: true },
     { time: "09:40", available: true },
     { time: "10:00", available: true },
     { time: "10:20", available: true },
@@ -13,8 +13,8 @@ export const times = {
     { time: "12:20", available: true },
   ],
   "2025-May-15": [
-    { time: "09:00", available: false },
-    { time: "09:20", available: false },
+    { time: "09:00", available: true },
+    { time: "09:20", available: true },
     { time: "09:40", available: true },
     { time: "10:00", available: true },
     { time: "10:20", available: true },
@@ -56,6 +56,9 @@ export const times = {
     { time: "22:20", available: true },
   ],
   "2025-May-16": [
+    { time: "09:00", available: true },
+    { time: "09:20", available: true },
+    { time: "09:40", available: true },
     { time: "10:00", available: true },
     { time: "10:20", available: true },
     { time: "10:40", available: true },
@@ -106,6 +109,9 @@ export const times = {
     { time: "12:00", available: true },
   ],
   "2025-May-20": [
+    { time: "09:00", available: true },
+    { time: "09:20", available: true },
+    { time: "09:40", available: true },
     { time: "10:00", available: true },
     { time: "10:20", available: true },
     { time: "10:40", available: true },

@@ -18,6 +18,7 @@ import { Times } from "@/components/Times";
 import { TimesData } from "@/app/api/bookDateTimes";
 import { bookDateTimes } from "@/app/api/bookDateTimes";
 import { useRouter } from "next/navigation";
+import BookingSummaryCard from "@/components/Booking/BookingSummaryCard";
 const schema = z.object({
   firstname: z.string().min(1, "First name is required"),
   lastname: z.string().min(1, "Last name is required"),
@@ -88,6 +89,11 @@ export default function Appointment() {
   };
 
   const formRef = useRef<HTMLFormElement>(null);
+
+  if (!currentCenter) {
+    return <p className='text-center mt-10'>Center not found</p>;
+  }
+
   return (
     <div className='flex flex-col gap-4 max-w-screen-xl mx-auto p-6 lg:p-10'>
       <h1 className='text-3xl font-bold font-montserrat mb-6'>Select time</h1>
@@ -141,93 +147,14 @@ export default function Appointment() {
           <Calendar />
           <Times date={date} />
         </form>
-        <div className='sticky top-20 border border-gray-200 rounded-md p-4 w-[550px] flex flex-col justify-between max-h-[600px] p-6 hidden lg:flex'>
-          <div className='flex flex-col'>
-            <div className='flex flex-row gap-4'>
-              <div className='relative h-[100px] w-[100px]'>
-                <Image
-                  src={currentCenter?.images[0] || "/images/default-image.png"}
-                  alt={currentCenter?.name || ""}
-                  fill
-                  className='object-cover rounded-md'
-                />
-              </div>
-              <div className='flex flex-col gap-2'>
-                <p className='text-lg font-bold font-montserrat'>
-                  {currentCenter?.name}
-                </p>
-                <div className='flex flex-row gap-2'>
-                  <p className='text-sm font-montserrat'>
-                    {currentCenter?.rating}
-                  </p>
-                  <StarIcon className='w-4 h-4' fill='black' />
-                  <p className='text-sm font-montserrat'>
-                    ({currentCenter?.reviews})
-                  </p>
-                </div>
-                <p className='text-sm font-montserrat'>
-                  {currentCenter?.address}
-                </p>
-              </div>
-            </div>
-            <div className='flex flex-col gap-4 mt-4 font-montserrat'>
-              <div className='flex flex-col gap-2 py-4'>
-                {date && (
-                  <p className='flex flex-row gap-2 text-sm font-medium text-gray-500 font-montserrat'>
-                    <CalendarIcon className='w-5 h-5' />
-                    {date}
-                  </p>
-                )}
-                {time && (
-                  <p className='flex flex-row gap-2 text-sm font-medium text-gray-500 font-montserrat'>
-                    <ClockIcon className='w-5 h-5' />
-                    {addTime(time, duration)} ({parseDuration(duration)})
-                  </p>
-                )}
-              </div>
-              {services.length > 0 ? (
-                services.map((service: ServiceProps) => (
-                  <div key={service.id} className='flex flex-col'>
-                    <div className='flex flex-row gap-2 w-full justify-between'>
-                      <p className='text-sm font-medium font-montserrat'>
-                        {service.name}
-                      </p>
-                      <p className='text-sm font-medium font-montserrat'>
-                        ${service.price}
-                      </p>
-                    </div>
-                    <p className='text-sm font-medium font-montserrat'>
-                      {service.time} min
-                    </p>
-                  </div>
-                ))
-              ) : (
-                <p className='text-sm font-montserrat text-gray-500'>
-                  No services selected
-                </p>
-              )}
-            </div>
-            <hr className='my-4' />
-            <div className='flex flex-row gap-2 w-full justify-between'>
-              <p className='text-sm font-montserrat font-bold'>Total</p>
-              <p className='text-sm font-montserrat font-bold'>
-                $
-                {services.reduce((acc: number, service: ServiceProps) => {
-                  return acc + service.price;
-                }, 0)}
-              </p>
-            </div>
-          </div>
-          <div className='flex gap-2'>
-            <Button
-              className='w-full mt-4 self-end cursor-pointer'
-              type='submit'
-              onClick={handleSubmit(onSubmit)}
-            >
-              Continue
-            </Button>
-          </div>
-        </div>
+        <BookingSummaryCard
+          center={currentCenter}
+          services={services}
+          date={date}
+          time={time}
+          duration={duration}
+          continueHref={`/${center}/booking/time`}
+        />
       </div>
     </div>
   );

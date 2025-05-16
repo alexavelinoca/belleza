@@ -4,6 +4,7 @@ import { MapPinIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { CenterProps } from "@/lib/centers";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function SummaryCard({
   centerContent,
@@ -11,22 +12,26 @@ export default function SummaryCard({
   centerContent: CenterProps | undefined;
 }) {
   const router = useRouter();
+
+  if (!centerContent) return null;
+  const { name, rating, reviews, company, address } = centerContent;
+
+  useEffect(() => {
+    if (company) router.prefetch(`/${company}/booking`);
+  }, [company]);
+
   return (
-    <div className='flex flex-col gap-2 shadow-lg border border-gray-200 p-8 rounded-md h-[280px] min-w-[400px] hidden lg:flex'>
-      <h2 className='text-3xl font-bold font-montserrat'>
-        {centerContent?.name}
-      </h2>
+    <div className='flex flex-col gap-2 shadow-lg border border-gray-200 p-6 rounded-md h-[280px] min-w-[400px] hidden lg:flex'>
+      <h2 className='text-3xl font-bold font-montserrat'>{name}</h2>
       <p className='text-lg font-semibold flex items-center gap-2'>
-        {centerContent?.rating}
+        {rating}
         <StarIcon size={20} className='text-black' fill='currentColor' />
-        <span className='text-lg text-purple-500'>
-          ( {centerContent?.reviews} )
-        </span>
+        <span className='text-lg text-purple-500'>( {reviews} )</span>
       </p>
       <Button
         variant='default'
         className='px-4 py-2 rounded-md'
-        onClick={() => router.push(`/${centerContent?.company}/booking`)}
+        onClick={() => router.push(`/${company}/booking`)}
       >
         Book Now
       </Button>
@@ -40,9 +45,7 @@ export default function SummaryCard({
         </div>
         <div className='flex flex-row gap-2'>
           <MapPinIcon size={20} className='text-black' />
-          <p className='text-sm text-gray-700 font-montserrat'>
-            Sesame Street 123, New York, NY 10001
-          </p>
+          <p className='text-sm text-gray-700 font-montserrat'>{address}</p>
         </div>
       </div>
     </div>

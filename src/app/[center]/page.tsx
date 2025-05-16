@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import CenterDetails from "@/components/Center/CenterDetails";
 import CenterHeader from "@/components/Center/CenterHeader";
 import CenterImages from "@/components/Center/CenterImages";
+
 export default function CenterPage() {
   const { centerContent, isLoading } = useCenterData();
 

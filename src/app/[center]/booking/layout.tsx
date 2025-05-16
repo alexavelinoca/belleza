@@ -1,8 +1,10 @@
 "use client";
+
 import { ArrowLeftIcon, XIcon } from "lucide-react";
 import { useRouter, usePathname, useParams } from "next/navigation";
 import useUserSelectionsStore from "@/store/userSelectionsStore";
 import { Button } from "@/components/ui/button";
+
 export default function BookingLayout({
   children,
 }: {
@@ -18,14 +20,22 @@ export default function BookingLayout({
   const numberOfServices = useUserSelectionsStore(
     (state: any) => state.services.length
   );
+  const date = useUserSelectionsStore((state: any) => state.date);
+  const time = useUserSelectionsStore((state: any) => state.time);
 
   const resetServices = useUserSelectionsStore(
     (state: any) => state.resetServices
   );
 
+  const resetTimes = useUserSelectionsStore((state: any) => state.resetTime);
+  const resetDate = useUserSelectionsStore((state: any) => state.resetDate);
   const handleBack = () => {
     if (title === "Select services") {
       resetServices();
+    }
+    if (title === "Select time") {
+      resetTimes();
+      resetDate();
     }
     return router.back();
   };
@@ -42,6 +52,13 @@ export default function BookingLayout({
       const formRef = document.querySelector("form");
       formRef?.requestSubmit();
     }
+  };
+
+  const handleContinue = () => {
+    if (title === "Select time") {
+      return !date || !time;
+    }
+    return false;
   };
 
   return (
@@ -68,7 +85,9 @@ export default function BookingLayout({
           <p className='text-lg font-medium font-montserrat mr-12'>
             Total: ${totalPrice}
           </p>
-          <Button onClick={handleFooter}>Continue</Button>
+          <Button onClick={handleFooter} disabled={handleContinue()}>
+            Continue
+          </Button>
         </div>
       </div>
     </>
