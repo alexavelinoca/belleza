@@ -4,15 +4,13 @@ import { MapPinIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { CenterProps } from "@/lib/centers";
 import { useRouter } from "next/navigation";
-import { Router } from "next/router";
 
 export default function SummaryCard({
   centerContent,
-  router,
 }: {
-  centerContent: CenterProps;
-  router: Router;
+  centerContent: CenterProps | undefined;
 }) {
+  const router = useRouter();
   return (
     <div className='flex flex-col gap-2 shadow-lg border border-gray-200 p-8 rounded-md h-[280px] min-w-[400px] hidden lg:flex'>
       <h2 className='text-3xl font-bold font-montserrat'>

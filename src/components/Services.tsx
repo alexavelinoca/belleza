@@ -16,6 +16,7 @@ export default function Services({
 }) {
   const [services, setServices] = useState<ServiceProps[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     fetchCenterServices(centerId).then((data) => {
       setServices(data);

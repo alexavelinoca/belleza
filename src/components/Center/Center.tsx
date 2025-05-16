@@ -1,4 +1,5 @@
 import { CenterProps } from "@/lib/centers";
+import { DEFAULT_IMAGE } from "@/lib/constants";
 import { StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,7 +10,7 @@ export default function Center(center: CenterProps) {
     <div className='w-full sm:w-[48%] md:w-[31%] lg:w-[23%] min-w-[200px] bg-white rounded-md shadow-lg cursor-pointer transition-all'>
       <Link href={`/${center.company}`}>
         <Image
-          src={images[0]}
+          src={images[0] || DEFAULT_IMAGE}
           className='w-full aspect-[4/3] object-cover rounded-t-md'
           alt='center'
           width={270}
