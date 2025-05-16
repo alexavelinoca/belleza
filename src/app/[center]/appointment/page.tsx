@@ -9,6 +9,8 @@ import {
   ClockIcon,
   CheckIcon,
   MapPin,
+  Mail,
+  User,
 } from "lucide-react";
 
 import { fetchCenters } from "@/app/api/fetchCenters";
@@ -19,10 +21,13 @@ import { CenterProps } from "@/lib/centers";
 export default function AppointmentConfirmationPage() {
   const { center } = useParams();
   const router = useRouter();
-  const { resetServices, resetDate, resetTime } = useUserSelectionsStore();
+  const { resetServices } = useUserSelectionsStore();
 
   const date = useUserSelectionsStore((state) => state.date);
   const time = useUserSelectionsStore((state) => state.time);
+  const fullName = useUserSelectionsStore((state) => state.fullName);
+  const email = useUserSelectionsStore((state) => state.email);
+
   const [centerContent, setCenterContent] = useState<CenterProps | undefined>();
 
   const cleanUserSelections = () => {
@@ -65,11 +70,9 @@ export default function AppointmentConfirmationPage() {
                 {centerContent.rating.toFixed(1)}
               </div>
             </div>
-
             <p className='text-gray-500 text-md font-montserrat flex flex-row items-center gap-2'>
               <MapPin size={20} /> {centerContent.address}
             </p>
-
             <div className='flex items-center gap-2 text-green-600 bg-green-100 px-3 py-1 rounded-full w-fit mt-4'>
               <CheckIcon size={16} />
               <span className='text-sm font-semibold'>
@@ -79,6 +82,12 @@ export default function AppointmentConfirmationPage() {
           </div>
 
           <div className='flex flex-col gap-3 mt-4 text-lg font-montserrat'>
+            <p className='text-gray-500 text-md font-montserrat flex flex-row items-center gap-2'>
+              <User size={20} /> {fullName}
+            </p>
+            <p className='text-gray-500 text-md font-montserrat flex flex-row items-center gap-2'>
+              <Mail size={20} /> {email}
+            </p>
             <div className='flex items-center gap-2'>
               <CalendarIcon size={20} className='text-[#6950f3]' />
               <span>{date}</span>

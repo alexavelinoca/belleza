@@ -2,19 +2,20 @@
 import { useState, useEffect } from "react";
 import { fetchDateTimes } from "@/app/api/fetchDateTimes";
 import useUserSelectionsStore from "@/store/userSelectionsStore";
-
+import { Skeleton } from "@/components/ui/skeleton";
 export function Times({ date }: { date: string }) {
-  console.log("date selected", date);
   const [times, setTimes] = useState<{ time: string; available: boolean }[]>(
     []
   );
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const { setTime } = useUserSelectionsStore();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchDateTimes(date).then((times) =>
-      setTimes(times as { time: string; available: boolean }[])
-    );
+    fetchDateTimes(date).then((times) => {
+      setTimes(times as { time: string; available: boolean }[]);
+      setIsLoading(false);
+    });
   }, [date]);
 
   const handleClick = (time: string) => {
@@ -24,7 +25,7 @@ export function Times({ date }: { date: string }) {
 
   const isToday = (selectedDate: string) => {
     const today = new Date();
-    const [year, month, day] = selectedDate.split("-");
+    const [year, day] = selectedDate.split("-");
 
     return (
       today.getFullYear() === Number(year) &&
@@ -45,6 +46,19 @@ export function Times({ date }: { date: string }) {
 
     return slotTime > now;
   });
+
+  if (isLoading) {
+    return (
+      <div className='mb-5 gap-5'>
+        <Skeleton className='w-full h-15 mb-2' />
+        <Skeleton className='w-full h-15 mb-2' />
+        <Skeleton className='w-full h-15 mb-2' />
+        <Skeleton className='w-full h-15 mb-2' />
+        <Skeleton className='w-full h-15 mb-2' />
+        <Skeleton className='w-full h-15 mb-2' />
+      </div>
+    );
+  }
 
   return (
     <div className='mb-5'>

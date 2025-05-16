@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Service } from "./Service";
 import { useState } from "react";
 import { fetchCenterServices } from "@/app/api/fetchCenterServices";
-
+import { Skeleton } from "@/components/ui/skeleton";
 export default function Services({
   company,
   booking,
@@ -15,10 +15,23 @@ export default function Services({
   centerId: number;
 }) {
   const [services, setServices] = useState<ServiceProps[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    fetchCenterServices(centerId).then(setServices);
+    fetchCenterServices(centerId).then((data) => {
+      setServices(data);
+      setIsLoading(false);
+    });
   }, [centerId]);
 
+  if (isLoading) {
+    return (
+      <div className={`flex flex-col gap-4 w-full`}>
+        <Skeleton className='w-full h-10' />
+        <Skeleton className='w-full h-10' />
+        <Skeleton className='w-full h-10' />
+      </div>
+    );
+  }
   return (
     <div className={`flex flex-col gap-4 w-full`}>
       {booking ? (
@@ -32,14 +45,20 @@ export default function Services({
       )}
       <div className='flex flex-row gap-4'>
         <div className='flex flex-col gap-4 w-full lg:mr-4 pb-18 lg:pb-0'>
-          {services.map((service) => (
-            <Service
-              key={service.id}
-              service={service}
-              company={company}
-              booking={booking}
-            />
-          ))}
+          {services.length > 0 ? (
+            services.map((service) => (
+              <Service
+                key={service.id}
+                service={service}
+                company={company}
+                booking={booking}
+              />
+            ))
+          ) : (
+            <p className='text-center text-gray-500'>
+              No services found for this center
+            </p>
+          )}
         </div>
       </div>
     </div>

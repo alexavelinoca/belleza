@@ -2,8 +2,7 @@
 
 import Services from "@/components/Services";
 import SummaryCard from "@/components/SummaryCard";
-import { CenterProps, centers } from "@/lib/centers";
-import { services } from "@/lib/services";
+import { CenterProps } from "@/lib/centers";
 import { StarIcon } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -11,23 +10,43 @@ import { useRouter } from "next/navigation";
 import { Router } from "next/router";
 import { useEffect, useState } from "react";
 import { fetchCenters } from "../api/fetchCenters";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function CenterPage() {
   const { center } = useParams();
   const router = useRouter();
   const [centerContent, setCenterContent] = useState<CenterProps | undefined>();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchCenters().then((data) => {
-      console.log("data", data);
       setCenterContent(
         data.find((centerName) => centerName.company === center)
       );
+      setIsLoading(false);
     });
   }, [center]);
 
+  if (isLoading) {
+    return (
+      <div className='flex flex-col gap-4 max-w-screen-xl mx-auto px-6 py-4'>
+        <div className='flex flex-row items-center gap-2'>
+          <Skeleton className='rounded-md w-20 h-20 md:w-25 md:h-25 lg:w-30 lg:h-30' />
+          <h1 className='text-2xl md:text-3xl lg:text-4xl font-bold'>
+            <Skeleton className='w-full h-10' />
+          </h1>
+        </div>
+        <Skeleton className='w-full h-10' />
+        <Skeleton className='w-full h-10' />
+        <div className='flex flex-col md:flex-row gap-4 mb-4'>
+          <Skeleton className='w-full h-100' />
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className='flex flex-col gap-4 max-w-screen-xl mx-auto p-6 lg:p-10'>
+    <div className='flex flex-col gap-4 max-w-screen-xl mx-auto px-6 py-4'>
       <div className='flex flex-row items-center gap-2'>
         <Image
           src={centerContent?.logo || "/images/default-image.png"}

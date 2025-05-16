@@ -44,6 +44,8 @@ export default function Appointment() {
   }, 0);
   const date = useUserSelectionsStore((state: any) => state.date);
   const time = useUserSelectionsStore((state: any) => state.time);
+  const setFullName = useUserSelectionsStore((state: any) => state.setFullName);
+  const setEmail = useUserSelectionsStore((state: any) => state.setEmail);
 
   useEffect(() => {
     const centerData = centers.find((c) => c.company === center);
@@ -76,10 +78,11 @@ export default function Appointment() {
   };
 
   const onSubmit = (data: AppointmentForm) => {
-    console.log("onSubmit", data);
     const stored = localStorage.getItem("times");
     const current: TimesData = stored ? JSON.parse(stored) : {};
     const updated = bookDateTimes(date, time, current, duration);
+    setFullName(data.firstname + " " + data.lastname);
+    setEmail(data.email);
     localStorage.setItem("times", JSON.stringify(updated));
     router.push(`/${center}/appointment`);
   };

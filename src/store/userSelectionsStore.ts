@@ -13,6 +13,12 @@ type UserSelectionsState = {
   time: string;
   setTime: (time: string) => void;
   resetTime: () => void;
+  fullName: string;
+  setFullName: (fullName: string) => void;
+  resetFullName: () => void;
+  email: string;
+  setEmail: (email: string) => void;
+  resetEmail: () => void;
 };
 
 const useUserSelectionsStore = create<UserSelectionsState>()(
@@ -38,6 +44,12 @@ const useUserSelectionsStore = create<UserSelectionsState>()(
       time: "",
       setTime: (time: string) => set({ time }),
       resetTime: () => set({ time: "" }),
+      fullName: "",
+      setFullName: (fullName: string) => set({ fullName }),
+      resetFullName: () => set({ fullName: "" }),
+      email: "",
+      setEmail: (email: string) => set({ email }),
+      resetEmail: () => set({ email: "" }),
     }),
     {
       name: "user-selections-store", // clave en localStorage
