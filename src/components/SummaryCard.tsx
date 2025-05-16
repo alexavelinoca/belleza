@@ -13,12 +13,14 @@ export default function SummaryCard({
 }) {
   const router = useRouter();
 
-  if (!centerContent) return null;
-  const { name, rating, reviews, company, address } = centerContent;
-
   useEffect(() => {
-    if (company) router.prefetch(`/${company}/booking`);
-  }, [company]);
+    if (centerContent?.company)
+      router.prefetch(`/${centerContent.company}/booking`);
+  }, [centerContent?.company, router]);
+
+  if (!centerContent) return null;
+
+  const { name, rating, reviews, company, address } = centerContent;
 
   return (
     <div className='flex flex-col gap-2 shadow-lg border border-gray-200 p-6 rounded-md h-[280px] min-w-[400px] hidden lg:flex'>

@@ -7,7 +7,6 @@ export async function fetchDateTimes(date: string) {
   const timesData: TimesData = stored ? JSON.parse(stored) : times;
   localStorage.setItem("times", JSON.stringify(timesData));
 
-  // Garantiza que el día exista
   if (!timesData[date]) {
     timesData[date] = [];
   }
@@ -15,6 +14,6 @@ export async function fetchDateTimes(date: string) {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(timesData[date]);
-    }, 500); // simula delay de API
+    }, DELAY);
   });
 }

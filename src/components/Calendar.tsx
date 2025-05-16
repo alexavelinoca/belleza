@@ -13,10 +13,6 @@ export default function Calendar() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { setDate, resetTime, setTime } = useUserSelectionsStore();
 
-  useEffect(() => {
-    handleClick(0);
-  }, []);
-
   const normalize = (date: Date) => {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
   };
@@ -55,6 +51,10 @@ export default function Calendar() {
       });
     }
   };
+
+  useEffect(() => {
+    handleClick(0);
+  }, [handleClick]);
 
   const handleLeft = () => {
     if (startIndex > 0) setStartIndex(startIndex - 7);

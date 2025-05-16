@@ -10,8 +10,6 @@ import { usePathname, useRouter } from "next/navigation";
 type Props = {
   center: CenterProps;
   services: ServiceProps[];
-  continueHref?: string;
-  onContinue?: () => void;
   date?: string;
   time?: string;
   duration?: number;
@@ -20,8 +18,6 @@ type Props = {
 export default function BookingSummaryCard({
   center,
   services,
-  continueHref,
-  onContinue,
   date,
   time,
   duration,

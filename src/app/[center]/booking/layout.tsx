@@ -4,6 +4,7 @@ import { ArrowLeftIcon, XIcon } from "lucide-react";
 import { useRouter, usePathname, useParams } from "next/navigation";
 import useUserSelectionsStore from "@/store/userSelectionsStore";
 import { Button } from "@/components/ui/button";
+import { ServiceProps } from "@/lib/services";
 
 export default function BookingLayout({
   children,
@@ -14,21 +15,22 @@ export default function BookingLayout({
   const pathname = usePathname();
   const { center } = useParams();
   const title = pathname.includes("time") ? "Select time" : "Select services";
-  const totalPrice = useUserSelectionsStore((state: any) =>
-    state.services.reduce((acc: number, service: any) => acc + service.price, 0)
+  const totalPrice = useUserSelectionsStore((state) =>
+    state.services.reduce(
+      (acc: number, service: ServiceProps) => acc + service.price,
+      0
+    )
   );
   const numberOfServices = useUserSelectionsStore(
-    (state: any) => state.services.length
+    (state) => state.services.length
   );
-  const date = useUserSelectionsStore((state: any) => state.date);
-  const time = useUserSelectionsStore((state: any) => state.time);
+  const date = useUserSelectionsStore((state) => state.date);
+  const time = useUserSelectionsStore((state) => state.time);
 
-  const resetServices = useUserSelectionsStore(
-    (state: any) => state.resetServices
-  );
+  const resetServices = useUserSelectionsStore((state) => state.resetServices);
 
-  const resetTimes = useUserSelectionsStore((state: any) => state.resetTime);
-  const resetDate = useUserSelectionsStore((state: any) => state.resetDate);
+  const resetTimes = useUserSelectionsStore((state) => state.resetTime);
+  const resetDate = useUserSelectionsStore((state) => state.resetDate);
   const handleBack = () => {
     if (title === "Select services") {
       resetServices();

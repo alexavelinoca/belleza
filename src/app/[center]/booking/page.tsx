@@ -5,8 +5,7 @@ import { centers } from "@/lib/centers";
 import useUserSelectionsStore from "@/store/userSelectionsStore";
 import { CenterProps } from "@/lib/centers";
 import { useParams } from "next/navigation";
-import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import BookingSummaryCard from "@/components/Booking/BookingSummaryCard";
 
 export default function BookingPage() {
@@ -19,12 +18,6 @@ export default function BookingPage() {
   }, [center]);
 
   const services = useUserSelectionsStore((state) => state.services);
-  const router = useRouter();
-
-  const total = useMemo(
-    () => services.reduce((acc, s) => acc + s.price, 0),
-    [services]
-  );
 
   if (!currentCenter) {
     return <p className='text-center mt-10'>Center not found</p>;
@@ -39,11 +32,7 @@ export default function BookingPage() {
           booking={true}
         />
       </div>
-      <BookingSummaryCard
-        center={currentCenter}
-        services={services}
-        continueHref={`/${currentCenter.company}/booking/time`}
-      />
+      <BookingSummaryCard center={currentCenter} services={services} />
     </div>
   );
 }

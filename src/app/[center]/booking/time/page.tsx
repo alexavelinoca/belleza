@@ -1,24 +1,22 @@
 "use client";
+
 import { CenterProps } from "@/lib/centers";
 import { centers } from "@/lib/centers";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef, useState } from "react";
-import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-
 import { z } from "zod";
-import { StarIcon, CalendarIcon, ClockIcon } from "lucide-react";
 import { ServiceProps } from "@/lib/services";
 import useUserSelectionsStore from "@/store/userSelectionsStore";
-import { Button } from "@/components/ui/button";
 import Calendar from "@/components/Calendar";
 import { Times } from "@/components/Times";
 import { TimesData } from "@/app/api/bookDateTimes";
 import { bookDateTimes } from "@/app/api/bookDateTimes";
 import { useRouter } from "next/navigation";
 import BookingSummaryCard from "@/components/Booking/BookingSummaryCard";
+
 const schema = z.object({
   firstname: z.string().min(1, "First name is required"),
   lastname: z.string().min(1, "Last name is required"),
@@ -39,44 +37,19 @@ export default function Appointment() {
 
   const [currentCenter, setCurrentCenter] = useState<CenterProps | undefined>();
   const { center } = useParams();
-  const services = useUserSelectionsStore((state: any) => state.services);
+  const services = useUserSelectionsStore((state) => state.services);
   const duration = services.reduce((acc: number, service: ServiceProps) => {
     return acc + service.time;
   }, 0);
-  const date = useUserSelectionsStore((state: any) => state.date);
-  const time = useUserSelectionsStore((state: any) => state.time);
-  const setFullName = useUserSelectionsStore((state: any) => state.setFullName);
-  const setEmail = useUserSelectionsStore((state: any) => state.setEmail);
+  const date = useUserSelectionsStore((state) => state.date);
+  const time = useUserSelectionsStore((state) => state.time);
+  const setFullName = useUserSelectionsStore((state) => state.setFullName);
+  const setEmail = useUserSelectionsStore((state) => state.setEmail);
 
   useEffect(() => {
     const centerData = centers.find((c) => c.company === center);
     setCurrentCenter(centerData);
   }, [center]);
-
-  const addTime = (time: string, duration: number) => {
-    const [hours, minutes] = time.split(":").map(Number);
-
-    const start = new Date();
-    start.setHours(hours, minutes, 0, 0);
-
-    const end = new Date(start);
-    end.setMinutes(start.getMinutes() + duration);
-
-    const format = (d: Date) =>
-      d.toLocaleTimeString("en-GB", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false,
-      });
-
-    return `${format(start)} - ${format(end)}`;
-  };
-
-  const parseDuration = (duration: number) => {
-    const hours = Math.floor(duration / 60);
-    const minutes = duration % 60;
-    return `${hours} h ${minutes} m duration`;
-  };
 
   const onSubmit = (data: AppointmentForm) => {
     const stored = localStorage.getItem("times");
@@ -153,7 +126,6 @@ export default function Appointment() {
           date={date}
           time={time}
           duration={duration}
-          continueHref={`/${center}/booking/time`}
         />
       </div>
     </div>
