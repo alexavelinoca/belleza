@@ -22,6 +22,11 @@ export default function BookingLayout({
     return router.back();
   };
 
+  const handleClose = () => {
+    resetServices();
+    router.push("/");
+  };
+
   return (
     <>
       <nav className='fixed top-0 left-0 w-full z-50 bg-white shadow-md'>
@@ -33,7 +38,7 @@ export default function BookingLayout({
           <h1 className='text-xl font-medium font-montserrat'>{title}</h1>
           <XIcon
             className='w-6 h-6 cursor-pointer hover:text-gray-500 ml-auto'
-            onClick={handleBack}
+            onClick={handleClose}
           />
         </div>
       </nav>

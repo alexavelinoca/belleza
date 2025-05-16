@@ -17,6 +17,7 @@ import Calendar from "@/components/Calendar";
 import { Times } from "@/components/Times";
 import { TimesData } from "@/app/api/bookDateTimes";
 import { bookDateTimes } from "@/app/api/bookDateTimes";
+import { useRouter } from "next/navigation";
 const schema = z.object({
   firstname: z.string().min(1, "First name is required"),
   lastname: z.string().min(1, "Last name is required"),
@@ -26,6 +27,7 @@ const schema = z.object({
 type AppointmentForm = z.infer<typeof schema>;
 
 export default function Appointment() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -78,6 +80,7 @@ export default function Appointment() {
     const current: TimesData = stored ? JSON.parse(stored) : {};
     const updated = bookDateTimes(date, time, current, duration);
     localStorage.setItem("times", JSON.stringify(updated));
+    router.push(`/${center}/appointment`);
   };
 
   return (

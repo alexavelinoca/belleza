@@ -1,5 +1,6 @@
 "use client";
 import { days } from "@/lib/days";
+import { times } from "@/lib/times";
 import useUserSelectionsStore from "@/store/userSelectionsStore";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -11,15 +12,28 @@ export default function Calendar() {
   const [startIndex, setStartIndex] = useState(0);
   const [currentMonth, setCurrentMonth] = useState(days[0].month);
   const [currentYear, setCurrentYear] = useState(days[0].year);
-  const visibleDays = days.slice(startIndex, startIndex + VISIBLE_DAYS);
   const containerRef = useRef<HTMLDivElement>(null);
   const { setDate } = useUserSelectionsStore();
+
+  const normalize = (date: Date) => {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  };
+
+  const futureDays = days.filter((day) => {
+    const currentDate = normalize(new Date());
+    const dayDate = normalize(new Date(`${day.year}-${day.month}-${day.date}`));
+    return dayDate >= currentDate;
+  });
+
+  const visibleDays = futureDays.slice(startIndex, startIndex + VISIBLE_DAYS);
 
   const handleClick = (index: number) => {
     setSelectedIndex(index);
     setCurrentMonth(days[index].month);
     setCurrentYear(days[index].year);
-    setDate(`${days[index].year}-${days[index].month}-${days[index].date}`);
+    setDate(
+      `${days[index].year}-${days[index].month}-${Number(days[index].date) + 1}`
+    );
     const container = containerRef.current;
     const child = container?.children[index] as HTMLElement;
     if (container && child) {
@@ -65,9 +79,6 @@ export default function Calendar() {
         className='flex gap-5 overflow-x-auto no-scrollbar px-2 pb-2'
       >
         {visibleDays.map((day, i) => {
-          if (day.date === "17") {
-            console.log("day", day, i);
-          }
           const realIndex = startIndex + i;
           const isSelected = realIndex === selectedIndex;
           return (

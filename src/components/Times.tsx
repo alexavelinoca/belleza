@@ -2,9 +2,9 @@
 import { useState, useEffect } from "react";
 import { fetchDateTimes } from "@/app/api/fetchDateTimes";
 import useUserSelectionsStore from "@/store/userSelectionsStore";
-import { bookDateTimes, TimesData } from "@/app/api/bookDateTimes";
 
 export function Times({ date }: { date: string }) {
+  console.log("date selected", date);
   const [times, setTimes] = useState<{ time: string; available: boolean }[]>(
     []
   );
@@ -22,7 +22,29 @@ export function Times({ date }: { date: string }) {
     setTime(time);
   };
 
-  const availableTimes = times.filter((time) => time.available);
+  const isToday = (selectedDate: string) => {
+    const today = new Date();
+    const [year, month, day] = selectedDate.split("-");
+
+    return (
+      today.getFullYear() === Number(year) &&
+      today.getMonth() === new Date(`${selectedDate}`).getMonth() &&
+      today.getDate() === Number(day)
+    );
+  };
+
+  const now = new Date();
+
+  const availableTimes = times.filter(({ time, available }) => {
+    if (!available) return false;
+    if (!isToday(date)) return true;
+
+    const [hour, minute] = time.split(":").map(Number);
+    const slotTime = new Date();
+    slotTime.setHours(hour, minute, 0, 0);
+
+    return slotTime > now;
+  });
 
   return (
     <div className='mb-5'>
