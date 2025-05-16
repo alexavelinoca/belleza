@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
+## Instructions for running the application locally
 
 First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. npm install
+2. npm run dev
+3. open http://localhost:3000
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+that's it
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Link to the deployed application (if applicable)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Deployed with Verel: https://belleza-c75u5zkbt-alexjohan97s-projects.vercel.app/
 
-## Learn More
+## Total time invested.
 
-To learn more about Next.js, take a look at the following resources:
+I guess a total of 30 hours, I'm exhausted but happy
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Details on any AI tools used (if applicable), pros and cons and your findings.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Well I was basically using Chat GPT as a consultor for code optimization and Cursor to develope with it's IA autocompleted
 
-## Deploy on Vercel
+I'ts important to mention that images are free of copyright because
+I'm using them from another app I've developed months ago with NextJS: https://unplash-clone-nine.vercel.app/
+This app uses Pexels API
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Features you would implement with more time.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+If I had more time, I’d focus on making the app feel more real and scalable:
+
+= Hook it up to a real backend or at least a proper mock with persistence, so bookings aren’t just stored locally.
+= Validate availability again before confirming to avoid race conditions or double bookings in edge cases.
+= Move availability logic to a shared layer or backend function to make it scalable (for things like recurring bookings or multi-service sessions).
+= Add luxon or date-fns-tz to handle time zones properly in case the app grows across regions.
+= Add authentication with NextAuth, so users can log in and manage their own bookings.
+= Show a personal appointment history once the user is logged in.
+= Replace static image previews with a real image carousel for a smoother UI.
+= Manage user roles and add a service provider role to track how the business is performing, see their bookings, and manage availability.
+
+Eventually I'll be finishing them
