@@ -1,14 +1,14 @@
 import { useEffect, useState, useMemo } from "react";
 import { fetchDateTimes } from "@/app/api/fetchDateTimes";
-
+import { MONTHS } from "@/lib/constants";
 type TimeSlot = {
   time: string;
   available: boolean;
 };
 
 const parseDateString = (dateStr: string) => {
-  const [year, month, day] = dateStr.split("-").map(Number);
-  return { year, month, day };
+  const [year, month, day] = dateStr.split("-");
+  return { year: Number(year), month: Number(MONTHS[month]), day: Number(day) };
 };
 
 const isToday = (dateStr: string) => {
@@ -40,9 +40,15 @@ export function useAvailableTimes(date: string) {
 
       const now = new Date();
       const [hour, minute] = time.split(":").map(Number);
-      const slotTime = new Date();
-      slotTime.setHours(hour, minute, 0, 0);
-
+      const slotTime = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+        hour,
+        minute,
+        0,
+        0
+      );
       return slotTime > now;
     });
   }, [times, date]);
