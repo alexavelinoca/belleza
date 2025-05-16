@@ -74,6 +74,9 @@ export const times = {
     { time: "14:00", available: true },
   ],
   "2025-May-17": [
+    { time: "08:00", available: true },
+    { time: "08:20", available: true },
+    { time: "08:40", available: true },
     { time: "09:00", available: true },
     { time: "09:20", available: true },
     { time: "09:40", available: true },

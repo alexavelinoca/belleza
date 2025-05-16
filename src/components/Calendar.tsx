@@ -25,7 +25,9 @@ export default function Calendar() {
     const currentDate = normalize(new Date());
     const dayDate = normalize(
       new Date(
-        `${day.year}-${MONTHS[day.month]}-${String(day.date).padStart(2, "0")}`
+        Number(day.year),
+        Number(MONTHS[day.month]) - 1,
+        Number(day.date)
       )
     );
     return dayDate >= currentDate;
