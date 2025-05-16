@@ -22,26 +22,32 @@ export function Times({ date }: { date: string }) {
     setTime(time);
   };
 
+  const availableTimes = times.filter((time) => time.available);
+
   return (
     <div className='mb-5'>
-      {times?.map((timeAvailable) => {
-        const isSelected = selectedTime === timeAvailable.time;
-        const isAvailable = timeAvailable.available;
-        if (!isAvailable) return null;
-        return (
-          <div
-            key={timeAvailable.time}
-            className={`rounded-md p-4 w-full cursor-pointer mb-2 ${
-              isSelected
-                ? "border-2 border-[#6950f3]"
-                : "border border-gray-200"
-            }`}
-            onClick={() => handleClick(timeAvailable.time)}
-          >
-            {timeAvailable.time}
-          </div>
-        );
-      })}
+      {availableTimes.length > 0 ? (
+        availableTimes.map((timeAvailable) => {
+          const isSelected = selectedTime === timeAvailable.time;
+          return (
+            <div
+              key={timeAvailable.time}
+              className={`rounded-md p-4 w-full cursor-pointer mb-2 ${
+                isSelected
+                  ? "border-2 border-[#6950f3]"
+                  : "border border-gray-200"
+              }`}
+              onClick={() => handleClick(timeAvailable.time)}
+            >
+              {timeAvailable.time}
+            </div>
+          );
+        })
+      ) : (
+        <div className='text-center text-gray-600 border border-gray-200 rounded-md p-4 w-full cursor-pointer mb-2'>
+          No times available
+        </div>
+      )}
     </div>
   );
 }

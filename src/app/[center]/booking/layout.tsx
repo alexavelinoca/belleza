@@ -8,16 +8,19 @@ export default function BookingLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
+  const title = pathname.includes("time") ? "Select time" : "Select services";
+
   const resetServices = useUserSelectionsStore(
     (state: any) => state.resetServices
   );
+
   const handleBack = () => {
-    resetServices();
+    if (title === "Select services") {
+      resetServices();
+    }
     return router.back();
   };
-
-  const pathname = usePathname();
-  const title = pathname.includes("time") ? "Select time" : "Select services";
 
   return (
     <>
