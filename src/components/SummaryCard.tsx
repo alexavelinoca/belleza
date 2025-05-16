@@ -14,7 +14,7 @@ export default function SummaryCard({
   router: Router;
 }) {
   return (
-    <div className='flex flex-col gap-2 shadow-lg border border-gray-200 p-8 rounded-md h-[280px] min-w-[400px]'>
+    <div className='flex flex-col gap-2 shadow-lg border border-gray-200 p-8 rounded-md h-[280px] min-w-[400px] hidden lg:flex'>
       <h2 className='text-3xl font-bold font-montserrat'>
         {centerContent?.name}
       </h2>

@@ -1,11 +1,9 @@
 "use client";
 import { days } from "@/lib/days";
-import { times } from "@/lib/times";
 import useUserSelectionsStore from "@/store/userSelectionsStore";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-
-const VISIBLE_DAYS = 9;
+import { VISIBLE_DAYS, SMALL_SCREEN_VISIBLE_DAYS } from "@/lib/constants";
 
 export default function Calendar() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -25,7 +23,12 @@ export default function Calendar() {
     return dayDate >= currentDate;
   });
 
-  const visibleDays = futureDays.slice(startIndex, startIndex + VISIBLE_DAYS);
+  const isSmallScreen = window.innerWidth < 768;
+
+  const visibleDays = futureDays.slice(
+    startIndex,
+    startIndex + (isSmallScreen ? SMALL_SCREEN_VISIBLE_DAYS : VISIBLE_DAYS)
+  );
 
   const handleClick = (index: number) => {
     setSelectedIndex(index);

@@ -34,11 +34,13 @@ export default function CenterPage() {
           alt={centerContent?.name || ""}
           width={100}
           height={100}
-          className='rounded-md'
+          className='rounded-md w-20 h-20 md:w-25 md:h-25 lg:w-30 lg:h-30'
         />
-        <h1 className='text-4xl font-bold'>{centerContent?.name}</h1>
+        <h1 className='text-2xl md:text-3xl lg:text-4xl font-bold'>
+          {centerContent?.name}
+        </h1>
       </div>
-      <p className='text-lg font-montserrat font-regular text-gray-600'>
+      <p className='text-sm md:text-lg font-montserrat font-regular text-gray-600'>
         {centerContent?.description}
       </p>
       <p className='text-lg font-semibold flex items-center gap-2'>
@@ -55,10 +57,10 @@ export default function CenterPage() {
             alt={centerContent?.name || ""}
             width={1030}
             height={800}
-            className='rounded-md aspect-[4/3] object-cover max-h-[515px]'
+            className='rounded-md aspect-[4/3] object-cover max-h-[300px] md:max-h-[515px]'
           />
         </div>
-        <div className='flex flex-col gap-4'>
+        <div className='flex flex-col gap-4 hidden lg:flex'>
           <Image
             src={centerContent?.images[1] || "/images/default-image.png"}
             alt={centerContent?.name || ""}

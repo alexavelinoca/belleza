@@ -14,7 +14,6 @@ export default function Services({
   booking: boolean;
   centerId: number;
 }) {
-  console.log("centerId", centerId);
   const [services, setServices] = useState<ServiceProps[]>([]);
   useEffect(() => {
     fetchCenterServices(centerId).then(setServices);
@@ -23,12 +22,16 @@ export default function Services({
   return (
     <div className={`flex flex-col gap-4 w-full`}>
       {booking ? (
-        <h1 className='text-3xl font-bold font-montserrat'>Select services</h1>
+        <h1 className='text-2xl md:text-3xl font-bold font-montserrat'>
+          Select services
+        </h1>
       ) : (
-        <h1 className='text-2xl font-bold font-montserrat'>Services</h1>
+        <h1 className='text-2xl md:text-3xl font-bold font-montserrat'>
+          Services
+        </h1>
       )}
       <div className='flex flex-row gap-4'>
-        <div className='flex flex-col gap-4 w-full mr-4'>
+        <div className='flex flex-col gap-4 w-full lg:mr-4 pb-18 lg:pb-0'>
           {services.map((service) => (
             <Service
               key={service.id}

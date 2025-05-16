@@ -48,7 +48,9 @@ export function Service({
       <Button
         variant='outline'
         className={`px-4 py-2 ${!booking && "rounded-2xl"} self-center ${
-          booking && selected ? "bg-[#6950f3]" : ""
+          booking && selected
+            ? "bg-[#6950f3] hover:bg-[#5e43f0] hover:text-black"
+            : ""
         }`}
         onClick={booking ? handleBooking : goToBooking}
       >

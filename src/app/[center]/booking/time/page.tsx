@@ -2,7 +2,7 @@
 import { CenterProps } from "@/lib/centers";
 import { centers } from "@/lib/centers";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
@@ -76,6 +76,7 @@ export default function Appointment() {
   };
 
   const onSubmit = (data: AppointmentForm) => {
+    console.log("onSubmit", data);
     const stored = localStorage.getItem("times");
     const current: TimesData = stored ? JSON.parse(stored) : {};
     const updated = bookDateTimes(date, time, current, duration);
@@ -83,11 +84,13 @@ export default function Appointment() {
     router.push(`/${center}/appointment`);
   };
 
+  const formRef = useRef<HTMLFormElement>(null);
   return (
     <div className='flex flex-col gap-4 max-w-screen-xl mx-auto p-6 lg:p-10'>
       <h1 className='text-3xl font-bold font-montserrat mb-6'>Select time</h1>
       <div className='flex flex-row gap-4'>
         <form
+          ref={formRef}
           onSubmit={handleSubmit(onSubmit)}
           className='space-y-6 w-full mr-12'
         >
@@ -135,7 +138,7 @@ export default function Appointment() {
           <Calendar />
           <Times date={date} />
         </form>
-        <div className='sticky top-20 border border-gray-200 rounded-md p-4 w-[550px] flex flex-col justify-between max-h-[600px] p-6'>
+        <div className='sticky top-20 border border-gray-200 rounded-md p-4 w-[550px] flex flex-col justify-between max-h-[600px] p-6 hidden lg:flex'>
           <div className='flex flex-col'>
             <div className='flex flex-row gap-4'>
               <div className='relative h-[100px] w-[100px]'>

@@ -19,10 +19,16 @@ import { CenterProps } from "@/lib/centers";
 export default function AppointmentConfirmationPage() {
   const { center } = useParams();
   const router = useRouter();
+  const { resetServices, resetDate, resetTime } = useUserSelectionsStore();
 
   const date = useUserSelectionsStore((state) => state.date);
   const time = useUserSelectionsStore((state) => state.time);
   const [centerContent, setCenterContent] = useState<CenterProps | undefined>();
+
+  const cleanUserSelections = () => {
+    router.push("/");
+    resetServices();
+  };
 
   useEffect(() => {
     fetchCenters().then((data) => {
@@ -35,7 +41,7 @@ export default function AppointmentConfirmationPage() {
 
   return (
     <div className='min-h-screen bg-white px-6 py-10 lg:px-24 flex flex-col items-center'>
-      <p className='text-4xl font-montserrat font-bold text-center mb-10'>
+      <p className='text-3xl md:text-4xl font-montserrat font-bold text-center mb-10'>
         Appointment Details
       </p>
       <div className='w-full max-w-6xl bg-white border border-gray-200 shadow-lg rounded-2xl overflow-hidden flex flex-col lg:flex-row'>
@@ -48,7 +54,7 @@ export default function AppointmentConfirmationPage() {
             priority
           />
         </div>
-        <div className='w-full lg:w-1/2 p-8 flex flex-col justify-between gap-6'>
+        <div className='w-full lg:w-1/2 p-8 flex flex-col justify-between gap-3 md:gap-6'>
           <div className='flex flex-col gap-2'>
             <div className='flex items-center gap-3'>
               <h1 className='text-3xl font-bold font-montserrat'>
@@ -84,7 +90,7 @@ export default function AppointmentConfirmationPage() {
           </div>
 
           <div className='flex justify-between items-center mt-6'>
-            <Button className='w-full' onClick={() => router.push("/")}>
+            <Button className='w-full' onClick={cleanUserSelections}>
               Return to Home
             </Button>
           </div>

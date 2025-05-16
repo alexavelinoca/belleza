@@ -30,7 +30,7 @@ export default function BookingPage() {
           booking={true}
         />
       </div>
-      <div className='border border-gray-200 rounded-md p-4 w-[600px] flex flex-col justify-between max-h-[600px] p-6'>
+      <div className='border border-gray-200 rounded-md p-4 w-[600px] flex flex-col justify-between max-h-[600px] p-6 hidden lg:flex'>
         <div className='flex flex-col'>
           <div className='flex flex-row gap-4'>
             <div className='relative h-[100px] w-[100px]'>
