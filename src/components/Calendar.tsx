@@ -54,7 +54,7 @@ export default function Calendar() {
 
   useEffect(() => {
     handleClick(0);
-  }, [handleClick]);
+  }, []);
 
   const handleLeft = () => {
     if (startIndex > 0) setStartIndex(startIndex - 7);
