@@ -34,9 +34,9 @@ export default function ClientLayout({
                 />
               </Link>
               <div className='flex items-center gap-8'>
-                {navLinks.map((link) => (
+                {navLinks.map((link, index) => (
                   <Link
-                    key={link.href}
+                    key={index}
                     href={link.href}
                     className='font-bold font-montserrat'
                   >
