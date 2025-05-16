@@ -27,8 +27,20 @@ export default function CenterPage() {
   }, [center]);
 
   return (
-    <div className=' flex flex-col gap-4 max-w-screen-xl mx-auto p-6 lg:p-10'>
-      <h1 className='text-4xl font-bold'>{centerContent?.name}</h1>
+    <div className='flex flex-col gap-4 max-w-screen-xl mx-auto p-6 lg:p-10'>
+      <div className='flex flex-row items-center gap-2'>
+        <Image
+          src={centerContent?.logo || "/images/default-image.png"}
+          alt={centerContent?.name || ""}
+          width={100}
+          height={100}
+          className='rounded-md'
+        />
+        <h1 className='text-4xl font-bold'>{centerContent?.name}</h1>
+      </div>
+      <p className='text-lg font-montserrat font-regular text-gray-600'>
+        {centerContent?.description}
+      </p>
       <p className='text-lg font-semibold flex items-center gap-2'>
         {centerContent?.rating}
         <StarIcon size={20} className='text-black' fill='currentColor' />

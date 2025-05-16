@@ -1,6 +1,6 @@
 import { ServiceProps } from "@/lib/services";
 import { Button } from "./ui/button";
-import { PlusIcon, CheckIcon } from "lucide-react";
+import { PlusIcon, CheckIcon, ClockIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import useUserSelectionsStore from "@/store/userSelectionsStore";
 
@@ -36,7 +36,10 @@ export function Service({
       <div className='flex flex-col justify-between w-full pl-1'>
         <h2 className='text-lg font-bold font-montserrat'>{service.name}</h2>
         <p className='text-sm text-gray-500 font-montserrat'>
-          {service.time} min
+          {service.description}
+        </p>
+        <p className='text-sm text-gray-500 font-montserrat flex items-center gap-2 mt-2'>
+          <ClockIcon className='w-4 h-4' /> {service.time} min
         </p>
         <p className='text-sm font-medium font-montserrat pt-2'>
           $ {service.price}
