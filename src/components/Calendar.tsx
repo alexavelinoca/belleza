@@ -67,16 +67,14 @@ export default function Calendar() {
 
   const selectedDay = futureDays[selectedIndex];
 
-  if (futureDays.length === 0) return null;
+  if (!selectedDay) return null;
 
   return (
     <div className='flex flex-col gap-4'>
       <div className='flex flex-row gap-4 w-full justify-between'>
-        {selectedDay && (
-          <h4 className='text-lg font-semibold'>
-            {selectedDay.month} {selectedDay.year}
-          </h4>
-        )}
+        <h4 className='text-lg font-semibold'>
+          {selectedDay?.month} {selectedDay?.year}
+        </h4>
         <div className='flex flex-row gap-4'>
           <ChevronLeft
             className='cursor-pointer rounded-lg  w-5 h-5'
