@@ -13,7 +13,7 @@ That's it.
 ## Link to the deployed application (if applicable)
 
 Deployed with Vercel:  
-[https://belleza-c75u5zkbt-alexjohan97s-projects.vercel.app/](https://belleza-c75u5zkbt-alexjohan97s-projects.vercel.app/)
+[[https://belleza-c75u5zkbt-alexjohan97s-projects.vercel.app/](https://belleza-c75u5zkbt-alexjohan97s-projects.vercel.app/)](https://belleza-lacr4rgbn-alexjohan97s-projects.vercel.app/)
 
 ---
 
