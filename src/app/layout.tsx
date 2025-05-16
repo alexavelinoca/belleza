@@ -45,7 +45,6 @@ export const metadata: Metadata = {
     icon: "/images/belleza-logo2.png",
     apple: "/images/belleza-logo2.png",
   },
-  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
