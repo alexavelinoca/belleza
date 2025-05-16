@@ -23,8 +23,6 @@ export const metadata: Metadata = {
     "Discover the best beauty products and services. Experts in personal care, aesthetic treatments, and beauty advice.",
   keywords: "beauty, personal care, aesthetic treatments, beauty advice",
   authors: [{ name: "Belleza" }],
-  viewport: "width=device-width, initial-scale=1, maximum-scale=5",
-  themeColor: "#ffffff",
   robots: "index, follow",
   openGraph: {
     type: "website",
