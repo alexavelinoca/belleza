@@ -3,7 +3,11 @@
 import useUserSelectionsStore from "@/store/userSelectionsStore";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useMemo, useRef, useState, useEffect } from "react";
-import { VISIBLE_DAYS, SMALL_SCREEN_VISIBLE_DAYS } from "@/lib/constants";
+import {
+  VISIBLE_DAYS,
+  SMALL_SCREEN_VISIBLE_DAYS,
+  MONTHS,
+} from "@/lib/constants";
 import { useIsSmallScreen } from "@/hooks/useIsSmallScreen";
 import { days } from "@/lib/days";
 
@@ -13,13 +17,18 @@ export default function Calendar() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { setDate, resetTime, setTime } = useUserSelectionsStore();
 
-  const normalize = (date: Date) => {
+  const normalize = (date: Date, index: number) => {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
   };
 
   const futureDays = days.filter((day) => {
-    const currentDate = normalize(new Date());
-    const dayDate = normalize(new Date(`${day.year}-${day.month}-${day.date}`));
+    const currentDate = normalize(new Date(), 0);
+    const dayDate = normalize(
+      new Date(
+        `${day.year}-${MONTHS[day.month]}-${String(day.date).padStart(2, "0")}`
+      ),
+      1
+    );
     return dayDate >= currentDate;
   });
 
@@ -32,11 +41,20 @@ export default function Calendar() {
 
   const itemRefs = useRef<Record<number, HTMLDivElement | null>>({});
 
+  useEffect(() => {
+    if (futureDays.length > 0 && selectedIndex === 0) {
+      handleClick(0);
+    }
+  }, [futureDays.length]);
+
   const handleClick = (index: number) => {
+    const selected = futureDays[index];
+    if (!selected) return;
+
     resetTime();
     setTime("");
     setSelectedIndex(index);
-    const selected = futureDays[index];
+
     const formattedDate = `${String(selected.year).padStart(4, "0")}-${String(
       selected.month
     ).padStart(2, "0")}-${String(selected.date).padStart(2, "0")}`;
@@ -53,8 +71,15 @@ export default function Calendar() {
   };
 
   useEffect(() => {
-    handleClick(0);
-  }, []);
+    if (
+      selectedIndex < startIndex ||
+      selectedIndex >= startIndex + visibleDays.length
+    ) {
+      if (visibleDays.length > 0) {
+        handleClick(startIndex);
+      }
+    }
+  }, [startIndex, visibleDays.length]);
 
   const handleLeft = () => {
     if (startIndex > 0) setStartIndex(startIndex - 7);
@@ -66,8 +91,11 @@ export default function Calendar() {
   };
 
   const selectedDay = futureDays[selectedIndex];
-
   if (!selectedDay) return null;
+
+  if (!futureDays.length) {
+    return <div className='text-center text-gray-400'>No days available</div>;
+  }
 
   return (
     <div className='flex flex-col gap-4'>
