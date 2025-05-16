@@ -17,17 +17,16 @@ export default function Calendar() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { setDate, resetTime, setTime } = useUserSelectionsStore();
 
-  const normalize = (date: Date, index: number) => {
+  const normalize = (date: Date) => {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
   };
 
   const futureDays = days.filter((day) => {
-    const currentDate = normalize(new Date(), 0);
+    const currentDate = normalize(new Date());
     const dayDate = normalize(
       new Date(
         `${day.year}-${MONTHS[day.month]}-${String(day.date).padStart(2, "0")}`
-      ),
-      1
+      )
     );
     return dayDate >= currentDate;
   });
