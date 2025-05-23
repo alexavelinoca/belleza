@@ -1,6 +1,5 @@
 import { SLOT_DURATION } from "@/lib/constants";
 
-// types.ts
 export type TimeSlot = {
   time: string;
   available: boolean;
@@ -14,7 +13,7 @@ export function bookDateTimes(
   dateKey: string,
   selectedTime: string,
   timesData: TimesData,
-  serviceDuration: number // en minutos
+  serviceDuration: number
 ): TimesData {
   const newTimes = { ...timesData };
 
